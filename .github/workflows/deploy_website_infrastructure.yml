@@ -11,37 +11,25 @@ jobs:
     name: Validate & Deploy Terraform
     runs-on: ubuntu-latest
     steps:
-      - name: Set current branch
-        run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
-
       - name: Set environment
         run: |
-          case ${{ env.BRANCH }} in
+          case ${GITHUB_REF##*/} in
             "production") echo "ENVIRONMENT=production" >> $GITHUB_ENV ;;
             "preprod") echo "ENVIRONMENT=preprod" >> $GITHUB_ENV ;;
             "qa") echo "ENVIRONMENT=qa" >> $GITHUB_ENV ;;
             *) echo "ENVIRONMENT=development" >> $GITHUB_ENV ;;
           esac
 
-      - name: Set terraform module source
-        run: |
-            case ${{ env.BRANCH }} in
-              "production") 
-                echo "MODULE_SOURCE=git::https://github.com/jomicu/terraform-static-website-module.git//module" >> $GITHUB_ENV 
-              ;;
-              "preprod") 
-                echo "MODULE_SOURCE=git::https://github.com/jomicu/terraform-static-website-module.git//module?ref=preprod" >> $GITHUB_ENV 
-              ;;
-              "qa") 
-                echo "MODULE_SOURCE=git::https://github.com/jomicu/terraform-static-website-module.git//module?ref=qa" >> $GITHUB_ENV 
-              ;;
-              *) 
-                echo "MODULE_SOURCE=git::https://github.com/jomicu/terraform-static-website-module.git//module?ref=development" >> $GITHUB_ENV 
-              ;;
-            esac
-
       - name: Checkout Repo
         uses: actions/checkout@v2
+
+      - name: Setup SSH Keys
+        run: |
+          mkdir -p .ssh
+          cd .ssh
+          touch id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" >> id_rsa
+          cd ..
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -60,7 +48,7 @@ jobs:
           sed -i "s|AWS_REGION_PLACEHOLDER|${{ secrets.AWS_REGION }}|g" main.tf
           sed -i "s|ENVIRONMENT_PLACEHOLDER|${{ env.ENVIRONMENT }}|g" main.tf
           sed -i "s|SERVICE_PLACEHOLDER|${{ secrets.AWS_SERVICE_NAME }}|g" main.tf
-          sed -i "s|MODULE_SOURCE_PLACEHOLDER|${{ env.MODULE_SOURCE }}|g" main.tf
+          sed -i "s|MODULE_SOURCE_PLACEHOLDER|${{ secrets.TERRAFORM_MODULE_SOURCE }}//module?ref=${{ env.ENVIRONMENT }}|g" main.tf
 
       - name: Terraform Init
         working-directory: "./infrastructure/website"
