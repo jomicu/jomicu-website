@@ -42,7 +42,6 @@ jobs:
           aws-region:  ${{ secrets.AWS_REGION }}
 
       - name: Setup Terraform
-        working-directory: "./infrastructure/website"
         uses: hashicorp/setup-terraform@v1
 
       - name: Replace placeholder's
