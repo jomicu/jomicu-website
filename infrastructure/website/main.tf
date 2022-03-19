@@ -19,7 +19,7 @@ provider "aws" {
 }
 
 module "configuration" {
-  source       = "SOURCE_PLACEHOLDER"
+  source       = "MODULE_SOURCE_PLACEHOLDER"
   environment  = "ENVIRONMENT_PLACEHOLDER"
   service_name = "SERVICE_PLACEHOLDER"
 }
