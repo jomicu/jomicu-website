@@ -25,13 +25,12 @@ jobs:
 
       - name: Set terraform module source
         run: |
-            module_source = "git::https://github.com/jomicu/terraform-static-website-module.git"
             case ${{ env.BRANCH }} in
               "production") 
                 echo "MODULE_SOURCE=https://github.com/jomicu/terraform-static-website-module.git" >> $GITHUB_ENV 
               ;;
               "preprod") 
-                echo "MODULE_SOURCE=https://github.com/${{  }}/terraform-static-website-module.git?ref=preprod" >> $GITHUB_ENV 
+                echo "MODULE_SOURCE=https://github.com/jomicu/terraform-static-website-module.git?ref=preprod" >> $GITHUB_ENV 
               ;;
               "qa") 
                 echo "MODULE_SOURCE=https://github.com/jomicu/terraform-static-website-module.git?ref=qa" >> $GITHUB_ENV 
