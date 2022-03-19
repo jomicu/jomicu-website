@@ -1,9 +1,10 @@
 name: Deploy Infrastructure
 
 on:
-  push:
-    paths:
-      - "infrastructure/website/**"
+  # push:
+  #   paths:
+  #     - "infrastructure/website/**"
+  - push
 
 jobs:
   deploy:
@@ -45,13 +46,12 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Replace placeholder's
-        working-directory: "./infrastructure/website"
         run: |
-          sed -i "s/AWS_TERRAFORM_BUCKET_PLACEHOLDER/${{ secrets.AWS_TERRAFORM_BUCKET }}/g" main.tf
-          sed -i "s/AWS_REGION_PLACEHOLDER/${{ secrets.AWS_REGION }}/g" main.tf
-          sed -i "s/ENVIRONMENT_PLACEHOLDER/${{ env.ENVIRONMENT }}/g" main.tf
-          sed -i "s/SERVICE_PLACEHOLDER/${{ secrets.AWS_SERVICE_NAME }}/g" main.tf
-          sed -i "s/SOURCE_PLACEHOLDER/${{ env.MODULE_SOURCE }}/g" main.tf
+          sed -i "s/AWS_TERRAFORM_BUCKET_PLACEHOLDER/${{ secrets.AWS_TERRAFORM_BUCKET }}/g" ./infrastructure/website/main.tf
+          sed -i "s/AWS_REGION_PLACEHOLDER/${{ secrets.AWS_REGION }}/g" ./infrastructure/website/main.tf
+          sed -i "s/ENVIRONMENT_PLACEHOLDER/${{ env.ENVIRONMENT }}/g" ./infrastructure/website/main.tf
+          sed -i "s/SERVICE_PLACEHOLDER/${{ secrets.AWS_SERVICE_NAME }}/g" ./infrastructure/website/main.tf
+          sed -i "s/SOURCE_PLACEHOLDER/${{ env.MODULE_SOURCE }}/g" ./infrastructure/website/main.tf
 
       - name: Terraform Init
         working-directory: "./infrastructure/website"
