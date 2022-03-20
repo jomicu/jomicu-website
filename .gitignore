@@ -35,3 +35,6 @@ override.tf.json
 
 # dist folder (production build)
 **/dist/*
+
+# vs code
+**/.vscode/*
