@@ -1,9 +1,10 @@
 name: Deploy Website
 
 on:
-  push:
-    paths:
-      - "application/**"
+  # push:
+  #   paths:
+  #     - "application/**"
+  - push*
 
 env:
   APPLICATION_DIRECTORY: "./application"
@@ -49,30 +50,10 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v2
 
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - uses: cypress-io/github-action@v2
         with:
-          node-version: "16"
-
-      - name: Caching Gatsby
-        id: gatsby-cache-build
-        uses: actions/cache@v2
-        with:
-          path: |
-            public
-            .cache
-            node_modules
-          key: ${{ runner.os }}-gatsby-alexhyett-site-build-${{ github.run_id }}
-          restore-keys: |
-            ${{ runner.os }}-gatsby-alexhyett-site-build-
-
-      - name: Install dependencies
-        working-directory: ${{ env.APPLICATION_DIRECTORY }}
-        run: npm install
-
-      - name: Run e2e tests
-        working-directory: ${{ env.APPLICATION_DIRECTORY }}
-        run: npm run test:e2e
+          browser: chrome
+          project: ./application
 
   deploy:
     name: Deploy Website
