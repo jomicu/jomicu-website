@@ -34,6 +34,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gatsby-alexhyett-site-build-
 
+      - name: Install dependencies
+        working-directory: ${{ env.APPLICATION_DIRECTORY }}
+        run: npm install
+
       - name: Run unit tests
         working-directory: ${{ env.APPLICATION_DIRECTORY }}
         run: npm run test:unit
@@ -61,6 +65,10 @@ jobs:
           key: ${{ runner.os }}-gatsby-alexhyett-site-build-${{ github.run_id }}
           restore-keys: |
             ${{ runner.os }}-gatsby-alexhyett-site-build-
+
+      - name: Install dependencies
+        working-directory: ${{ env.APPLICATION_DIRECTORY }}
+        run: npm install
 
       - name: Run e2e tests
         working-directory: ${{ env.APPLICATION_DIRECTORY }}
