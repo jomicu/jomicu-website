@@ -136,6 +136,6 @@ jobs:
         working-directory: ${{ env.APPLICATION_DIRECTORY }}
         run: |
           echo "need to build it"
-          aws s3 sync dist s3://${{ env.ENVIRONMENT }}${{ secrets.AWS_SERVICE_NAME }}
+          aws s3 sync dist s3://${{ env.ENVIRONMENT }}-${{ secrets.AWS_SERVICE_NAME }}
 
 
