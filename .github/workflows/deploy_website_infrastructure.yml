@@ -1,10 +1,9 @@
 name: Deploy Infrastructure
 
 on:
-  # push:
-  #   paths:
-  #     - "infrastructure/website/**"
-  - push
+  push:
+    paths:
+      - "infrastructure/website/**"
 
 jobs:
   deploy:
