@@ -4,7 +4,7 @@ on:
   # push:
   #   paths:
   #     - "application/**"
-  - push*
+  - push
 
 env:
   APPLICATION_DIRECTORY: "./application"
