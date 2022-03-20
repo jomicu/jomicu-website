@@ -54,6 +54,9 @@ jobs:
         with:
           browser: chrome
           project: ./application
+          build: npm run build
+          start: npm start
+          wait-on: http://localhost:3030
 
   deploy:
     name: Deploy Website
