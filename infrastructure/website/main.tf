@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 4.1"
+      version = ">= 4.0"
     }
   }
 
@@ -15,11 +15,14 @@ terraform {
 }
 
 provider "aws" {
-  region     = "AWS_REGION_PLACEHOLDER"
+  region = "AWS_REGION_PLACEHOLDER"
 }
 
 module "configuration" {
   source       = "MODULE_SOURCE_PLACEHOLDER"
+  region       = "AWS_REGION_PLACEHOLDER"
   environment  = "ENVIRONMENT_PLACEHOLDER"
   service_name = "SERVICE_PLACEHOLDER"
+  endpoint     = "ENDPOINT_PLACEHOLDER"
+  domain_name  = "DOMAIN_NAME_PLACEHOLDER"
 }
