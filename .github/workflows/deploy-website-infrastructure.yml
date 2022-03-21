@@ -63,7 +63,7 @@ jobs:
 
       - name: Terraform Validate
         working-directory: "./infrastructure/website"
-        run: terraform validate -no-color
+        run: terraform validate
 
       - name: Terraform Plan
         working-directory: "./infrastructure/website"
