@@ -1,10 +1,9 @@
 name: Deploy Website
 
 on:
-  # push:
-  #   paths:
-  #     - "application/**"
-  - push
+  push:
+    paths:
+      - "application/**"
 
 env:
   APPLICATION_DIRECTORY: "./application"
