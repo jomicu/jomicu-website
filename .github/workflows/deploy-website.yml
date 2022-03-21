@@ -7,6 +7,7 @@ on:
 
 env:
   APPLICATION_DIRECTORY: "./application"
+  ENVIRONMENT: "${GITHUB_REF##*/}"
 
 jobs:
 
@@ -83,14 +84,14 @@ jobs:
     needs: [unit-tests]
     runs-on: ubuntu-latest
     steps:
-      - name: Set environment
-        run: |
-          case ${GITHUB_REF##*/} in
-            "production") echo "ENVIRONMENT=production" >> $GITHUB_ENV ;;
-            "preprod") echo "ENVIRONMENT=preprod" >> $GITHUB_ENV ;;
-            "qa") echo "ENVIRONMENT=qa" >> $GITHUB_ENV ;;
-            *) echo "ENVIRONMENT=development" >> $GITHUB_ENV ;;
-          esac
+      # - name: Set environment
+      #   run: |
+      #     case ${GITHUB_REF##*/} in
+      #       "production") echo "ENVIRONMENT=production" >> $GITHUB_ENV ;;
+      #       "preprod") echo "ENVIRONMENT=preprod" >> $GITHUB_ENV ;;
+      #       "qa") echo "ENVIRONMENT=qa" >> $GITHUB_ENV ;;
+      #       *) echo "ENVIRONMENT=development" >> $GITHUB_ENV ;;
+      #     esac
 
       - name: Checkout Repo
         uses: actions/checkout@v2
