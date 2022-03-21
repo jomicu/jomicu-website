@@ -5,22 +5,28 @@ on:
     paths:
       - "infrastructure/website/**"
 
-env:
-  ENVIRONMENT: "${GITHUB_REF##*/}"
-
 jobs:
   deploy:
     name: Validate & Deploy Terraform
     runs-on: ubuntu-latest
     steps:
-      # - name: Set environment
-      #   run: |
-      #     case ${GITHUB_REF##*/} in
-      #       "production") echo "ENVIRONMENT=production" >> $GITHUB_ENV ;;
-      #       "preprod") echo "ENVIRONMENT=preprod" >> $GITHUB_ENV ;;
-      #       "qa") echo "ENVIRONMENT=qa" >> $GITHUB_ENV ;;
-      #       *) echo "ENVIRONMENT=development" >> $GITHUB_ENV ;;
-      #     esac
+      - name: Set environment
+        run: |
+          case ${GITHUB_REF##*/} in
+            "production") echo "ENVIRONMENT=production" >> $GITHUB_ENV ;;
+            "preprod") echo "ENVIRONMENT=preprod" >> $GITHUB_ENV ;;
+            "qa") echo "ENVIRONMENT=qa" >> $GITHUB_ENV ;;
+            *) echo "ENVIRONMENT=development" >> $GITHUB_ENV ;;
+          esac
+
+      - name: Set endpoint
+        run: |
+          case ${GITHUB_REF##*/} in
+            "production") echo "ENDPOINT="www.${{ secrets.DOMAIN_NAME }}"" >> $GITHUB_ENV ;;
+            "preprod") echo "ENDPOINT="preprod.${{ secrets.DOMAIN_NAME }}"" >> $GITHUB_ENV ;;
+            "qa") echo "ENDPOINT="qa.${{ secrets.DOMAIN_NAME }}"" >> $GITHUB_ENV ;;
+            *) echo "ENDPOINT="development.${{ secrets.DOMAIN_NAME }}"" >> $GITHUB_ENV ;;
+          esac
 
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -48,8 +54,8 @@ jobs:
           sed -i "s|ENVIRONMENT_PLACEHOLDER|${{ env.ENVIRONMENT }}|g" main.tf
           sed -i "s|SERVICE_PLACEHOLDER|${{ secrets.AWS_SERVICE_NAME }}|g" main.tf
           sed -i "s|MODULE_SOURCE_PLACEHOLDER|${{ secrets.TERRAFORM_MODULE_SOURCE }}//module?ref=${{ env.ENVIRONMENT }}|g" main.tf
-          sed -i "s|ENDPOINT_PLACEHOLDER|development.jomicu.com|g" main.tf
-          sed -i "s|DOMAIN_NAME_PLACEHOLDER|jomicu.com|g" main.tf
+          sed -i "s|DOMAIN_NAME_PLACEHOLDER|${{ secrets.DOMAIN_NAME }}|g" main.tf
+          sed -i "s|ENDPOINT_PLACEHOLDER|{{ env.ENDPOINT }}|g" main.tf
 
       - name: Terraform Init
         working-directory: "./infrastructure/website"
