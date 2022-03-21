@@ -1,6 +1,7 @@
 name: Deploy Website
 
 on:
+  pull_request:
   push:
     paths:
       - "application/**"
