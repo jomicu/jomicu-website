@@ -44,6 +44,7 @@ jobs:
           sed -i "s|AWS_REGION_PLACEHOLDER|${{ secrets.AWS_REGION }}|g" main.tf
           sed -i "s|ENVIRONMENT_PLACEHOLDER|${{ env.ENVIRONMENT }}|g" main.tf
           sed -i "s|SERVICE_PLACEHOLDER|${{ secrets.AWS_SERVICE_NAME }}|g" main.tf
+          sed -i "s|MODULE_SOURCE_PLACEHOLDER|${{ secrets.TERRAFORM_MODULE_SOURCE }}//module?ref=${{ env.ENVIRONMENT }}|g" main.tf
           sed -i "s|ENDPOINT_PLACEHOLDER|development.jomicu.com|g" main.tf
           sed -i "s|DOMAIN_NAME_PLACEHOLDER|jomicu.com|g" main.tf
 
