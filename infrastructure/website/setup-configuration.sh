@@ -7,6 +7,16 @@ SERVICE="jomicu-website"
 DOMAIN="jomicu.com"
 ENDPOINT="${ENVIRONMENT}.${DOMAIN}"
 
+# Cache will depend on the environment
+# For production -> 1800
+# For development -> 0 (disabled)
+if [ $ENVIRONMENT == "production" ]
+then
+    CACHE_TTL="1800"
+else
+    CACHE_TTL="0"
+fi
+
 # main.tf to replace values
 TERRAFORM_MAIN="main.tf"
 
@@ -17,4 +27,5 @@ sed -i "s|SERVICE_PLACEHOLDER|$SERVICE|g" "${TERRAFORM_MAIN}"
 sed -i "s|ENVIRONMENT_PLACEHOLDER|$ENVIRONMENT|g" "${TERRAFORM_MAIN}"
 sed -i "s|DOMAIN_PLACEHOLDER|$DOMAIN|g" "${TERRAFORM_MAIN}"
 sed -i "s|ENDPOINT_PLACEHOLDER|$ENDPOINT|g" "${TERRAFORM_MAIN}"
+sed -i "s|CACHE_TTL_PLACEHOLDER|$CACHE_TTL|g" "${TERRAFORM_MAIN}"
 

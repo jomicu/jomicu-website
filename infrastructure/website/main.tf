@@ -25,4 +25,5 @@ module "configuration" {
   environment      = "ENVIRONMENT_PLACEHOLDER"
   domain           = "DOMAIN_PLACEHOLDER"
   endpoint         = "ENDPOINT_PLACEHOLDER"
+  cache_ttl        = "CACHE_TTL_PLACEHOLDER"
 }
