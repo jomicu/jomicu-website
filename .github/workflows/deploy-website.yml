@@ -100,6 +100,6 @@ jobs:
 
       - name: Deploy to S3
         working-directory: ${{ env.APPLICATION_DIRECTORY }}
-        run: aws s3 sync dist s3://jomicu-website-${{ env.ENVIRONMENT }}
+        run: aws s3 sync dist s3://${{ env.ENVIRONMENT }}.jomicu.com
 
 
