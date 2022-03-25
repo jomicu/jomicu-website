@@ -8,6 +8,10 @@ on:
     paths:
       - "infrastructure/website/**"
 
+env:
+  INFRASTRUCTURE_DIRECTORY: "./infrastructure/website"
+  SCRIPTS_DIRECTORY: "./scripts"
+
 jobs:
   deploy:
     name: Validate & Deploy Terraform
@@ -20,15 +24,6 @@ jobs:
             "preprod") echo "ENVIRONMENT=preprod" >> $GITHUB_ENV ;;
             "qa") echo "ENVIRONMENT=qa" >> $GITHUB_ENV ;;
             *) echo "ENVIRONMENT=development" >> $GITHUB_ENV ;;
-          esac
-
-      - name: Set endpoint
-        run: |
-          case ${GITHUB_REF##*/} in
-            "production") echo "ENDPOINT="www.${{ secrets.DOMAIN_NAME }}"" >> $GITHUB_ENV ;;
-            "preprod") echo "ENDPOINT="preprod.${{ secrets.DOMAIN_NAME }}"" >> $GITHUB_ENV ;;
-            "qa") echo "ENDPOINT="qa.${{ secrets.DOMAIN_NAME }}"" >> $GITHUB_ENV ;;
-            *) echo "ENDPOINT="development.${{ secrets.DOMAIN_NAME }}"" >> $GITHUB_ENV ;;
           esac
 
       - name: Checkout Repo
@@ -49,30 +44,26 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
-      - name: Replace placeholder's
-        working-directory: "./infrastructure/website"
-        run: |
-          sed -i "s|AWS_TERRAFORM_BUCKET_PLACEHOLDER|${{ secrets.AWS_TERRAFORM_BUCKET }}|g" main.tf
-          sed -i "s|AWS_REGION_PLACEHOLDER|${{ secrets.AWS_REGION }}|g" main.tf
-          sed -i "s|ENVIRONMENT_PLACEHOLDER|${{ env.ENVIRONMENT }}|g" main.tf
-          sed -i "s|SERVICE_PLACEHOLDER|${{ secrets.AWS_SERVICE_NAME }}|g" main.tf
-          sed -i "s|MODULE_SOURCE_PLACEHOLDER|${{ secrets.TERRAFORM_MODULE_SOURCE }}//module?ref=${{ env.ENVIRONMENT }}|g" main.tf
-          sed -i "s|DOMAIN_NAME_PLACEHOLDER|${{ secrets.DOMAIN_NAME }}|g" main.tf
-          sed -i "s|ENDPOINT_PLACEHOLDER|${{ env.ENDPOINT }}|g" main.tf
+      - name: Setup Terraform configuration
+        working-directory: ${{ env.SCRIPTS_DIRECTORY }}
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          ENVIRONMENT: ${{ env.ENVIRONMENT }}
+        run: sh setup-configuration.sh
 
       - name: Terraform Init
-        working-directory: "./infrastructure/website"
+        working-directory: ${{ env.INFRASTRUCTURE_DIRECTORY }}
         run: terraform init
 
       - name: Terraform Validate
-        working-directory: "./infrastructure/website"
+        working-directory: ${{ env.INFRASTRUCTURE_DIRECTORY }}
         run: terraform validate
 
       - name: Terraform Plan
-        working-directory: "./infrastructure/website"
+        working-directory: ${{ env.INFRASTRUCTURE_DIRECTORY }}
         run: terraform plan
 
       - name: Terraform Apply
-        working-directory: "./infrastructure/website"
+        working-directory: ${{ env.INFRASTRUCTURE_DIRECTORY }}
         run: terraform apply -auto-approve
 

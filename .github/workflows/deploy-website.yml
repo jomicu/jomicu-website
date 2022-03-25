@@ -10,6 +10,7 @@ on:
 
 env:
   APPLICATION_DIRECTORY: "./application"
+  SCRIPTS_DIRECTORY: "./scripts"
 
 jobs:
 
@@ -83,6 +84,10 @@ jobs:
         working-directory: ${{ env.APPLICATION_DIRECTORY }}
         run: npm install
 
+      - name: Run Audit
+        working-directory: ${{ env.APPLICATION_DIRECTORY }}
+        run: npm audit fix
+
       - name: Run Lint
         working-directory: ${{ env.APPLICATION_DIRECTORY }}
         run: npm run lint
@@ -99,7 +104,10 @@ jobs:
           aws-region:  ${{ secrets.AWS_REGION }}
 
       - name: Deploy to S3
-        working-directory: ${{ env.APPLICATION_DIRECTORY }}
-        run: aws s3 sync dist s3://${{ env.ENVIRONMENT }}-${{ secrets.AWS_SERVICE_NAME }}
+        working-directory: ${{ env.SCRIPTS_DIRECTORY }}
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          ENVIRONMENT: ${{ env.ENVIRONMENT }}
+        run: sh deploy-website-to-s3.sh
 
 
