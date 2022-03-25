@@ -26,6 +26,15 @@ jobs:
             *) echo "ENVIRONMENT=development" >> $GITHUB_ENV ;;
           esac
 
+      - name: Set endpoint
+        run: |
+          case ${GITHUB_REF##*/} in
+            "production") echo "ENDPOINT="www.${{ secrets.DOMAIN_NAME }}"" >> $GITHUB_ENV ;;
+            "preprod") echo "ENDPOINT="preprod.${{ secrets.DOMAIN_NAME }}"" >> $GITHUB_ENV ;;
+            "qa") echo "ENDPOINT="qa.${{ secrets.DOMAIN_NAME }}"" >> $GITHUB_ENV ;;
+            *) echo "ENDPOINT="development.${{ secrets.DOMAIN_NAME }}"" >> $GITHUB_ENV ;;
+          esac
+
       - name: Checkout Repo
         uses: actions/checkout@v2
 
