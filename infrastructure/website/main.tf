@@ -15,7 +15,7 @@ terraform {
 }
 
 provider "aws" {
-  region     = "AWS_REGION_PLACEHOLDER"
+  region = "AWS_REGION_PLACEHOLDER"
 }
 
 module "configuration" {

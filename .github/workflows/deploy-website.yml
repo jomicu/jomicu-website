@@ -10,6 +10,7 @@ on:
 
 env:
   APPLICATION_DIRECTORY: "./application"
+  SCRIPTS_DIRECTORY: "./scripts"
 
 jobs:
 
@@ -99,7 +100,10 @@ jobs:
           aws-region:  ${{ secrets.AWS_REGION }}
 
       - name: Deploy to S3
-        working-directory: ${{ env.APPLICATION_DIRECTORY }}
-        run: aws s3 sync dist s3://${{ env.ENVIRONMENT }}.jomicu.com
+        working-directory: ${{ env.SCRIPTS_DIRECTORY }}
+        working-directory: ENVIRONMENT: ${{ env.ENVIRONMENT }}
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: sh deploy-website-to-s3.sh
 
 

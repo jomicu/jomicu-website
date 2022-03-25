@@ -5,20 +5,20 @@ AWS_TERRAFORM_BUCKET="jomicu-terraform-state"
 MODULE_SOURCE="git@github.com:jomicu/terraform-aws-website-module.git//module?ref=${ENVIRONMENT}"
 SERVICE="jomicu-website"
 DOMAIN="jomicu.com"
-ENDPOINT="${ENVIRONMENT}.${DOMAIN}"
 
+# The endpoint will be dependent on the environment
 # Cache will depend on the environment
-# For production -> 1800
-# For development -> 0 (disabled)
 if [ $ENVIRONMENT == "production" ]
 then
+    ENDPOINT=$DOMAIN
     CACHE_TTL="1800"
 else
+    ENDPOINT="${ENVIRONMENT}.${DOMAIN}"
     CACHE_TTL="0"
 fi
 
-# main.tf to replace values
-TERRAFORM_MAIN="main.tf"
+# main.tf path to replace values
+TERRAFORM_MAIN="../infrastructure/website/main.tf"
 
 sed -i "s|AWS_REGION_PLACEHOLDER|$AWS_REGION|g" "${TERRAFORM_MAIN}"
 sed -i "s|AWS_TERRAFORM_BUCKET_PLACEHOLDER|$AWS_TERRAFORM_BUCKET|g" "${TERRAFORM_MAIN}"
