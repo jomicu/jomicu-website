@@ -8,7 +8,7 @@ DOMAIN="jomicu.com"
 
 # The endpoint will be dependent on the environment
 # Cache will depend on the environment
-if [ $ENVIRONMENT == "production" ]
+if [ "${ENVIRONMENT}" = "production" ]
 then
     ENDPOINT=$DOMAIN
     CACHE_TTL="1800"

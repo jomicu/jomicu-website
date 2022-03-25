@@ -5,7 +5,7 @@ BUILD_FOLDER="../application/dist"
 DOMAIN="jomicu.com"
 
 # The bucket name will be dependent on the environment
-if [ $ENVIRONMENT == "production" ]
+if [ "${ENVIRONMENT}" = "production" ]
 then
     BUCKET=$DOMAIN
 else
