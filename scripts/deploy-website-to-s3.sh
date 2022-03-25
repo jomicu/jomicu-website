@@ -1,7 +1,7 @@
 # This script will update the bucket's content
 
 # Standard configuration
-BUILD_FOLDER="../dist"
+BUILD_FOLDER="../application/dist"
 DOMAIN="jomicu.com"
 
 # The bucket name will be dependent on the environment
