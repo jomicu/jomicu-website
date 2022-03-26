@@ -24,6 +24,6 @@ module "configuration" {
   deployed_service = "SERVICE_PLACEHOLDER"
   environment      = "ENVIRONMENT_PLACEHOLDER"
   domain           = "DOMAIN_PLACEHOLDER"
-  endpoint         = "ENDPOINT_PLACEHOLDER"
+  subdomain        = "SUBDOMAIN_PLACEHOLDER"
   cache_ttl        = "CACHE_TTL_PLACEHOLDER"
 }
