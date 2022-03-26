@@ -11,7 +11,7 @@ DOMAIN="jomicu.com"
 if [ "${ENVIRONMENT}" = "production" ]
 then
     SUBDOMAIN="www"
-    CACHE_TTL="1800"
+    CACHE_TTL="0" # "1800"
 else
     SUBDOMAIN="${ENVIRONMENT}"
     CACHE_TTL="0"
