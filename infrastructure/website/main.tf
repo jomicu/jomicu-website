@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 4.5"
+      version = ">= 4.6"
     }
   }
 
@@ -24,6 +24,6 @@ module "configuration" {
   deployed_service = "SERVICE_PLACEHOLDER"
   environment      = "ENVIRONMENT_PLACEHOLDER"
   domain           = "DOMAIN_PLACEHOLDER"
-  endpoint         = "ENDPOINT_PLACEHOLDER"
+  subdomain        = "SUBDOMAIN_PLACEHOLDER"
   cache_ttl        = "CACHE_TTL_PLACEHOLDER"
 }

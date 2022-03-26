@@ -7,7 +7,7 @@ DOMAIN="jomicu.com"
 # The bucket name will be dependent on the environment
 if [ "${ENVIRONMENT}" = "production" ]
 then
-    BUCKET=$DOMAIN
+    BUCKET="www.${DOMAIN}"
 else
     BUCKET="${ENVIRONMENT}.${DOMAIN}"
 fi
