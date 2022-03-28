@@ -7,10 +7,6 @@ terraform {
   }
 }
 
-provider "aws" {
-    region = "__AWS_REGION_PLACEHOLDER__"
-}
-
 module "configuration" {
   source           = "__MODULE_SOURCE_PLACEHOLDER__"
   deployed_service = "__SERVICE_PLACEHOLDER__"
