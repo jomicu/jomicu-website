@@ -1,12 +1,6 @@
 name: Deploy Website
 
-on:
-  pull_request:
-    paths: 
-      - "**"
-  push:
-    paths:
-      - "application/**"
+on: workflow_dispatch
 
 env:
   APPLICATION_DIRECTORY: "./application"
@@ -34,17 +28,17 @@ jobs:
         working-directory: ${{ env.APPLICATION_DIRECTORY }}
         run: npm run test:unit
 
-  # e2e-tests:
-  #   name: Run e2e tests
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout Repo
-  #       uses: actions/checkout@v2
+  e2e-tests:
+    name: Run e2e tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
 
-  #     - name: Setup Node
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: "16"
+      # - name: Setup Node
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: "16"
 
   #     - name: Install dependencies
   #       working-directory: ${{ env.APPLICATION_DIRECTORY }}

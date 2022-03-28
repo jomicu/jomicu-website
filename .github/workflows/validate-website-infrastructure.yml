@@ -1,6 +1,12 @@
-name: Deploy Infrastructure
+name: Validate Infrastructure
 
-on: workflow_dispatch
+on:
+  pull_request:
+    paths: 
+      - "**"
+  push:
+    paths:
+      - "infrastructure/website/**"
 
 env:
   INFRASTRUCTURE_DIRECTORY: "./infrastructure/website"
@@ -52,12 +58,3 @@ jobs:
       - name: Terraform Validate
         working-directory: ${{ env.INFRASTRUCTURE_DIRECTORY }}
         run: terraform validate
-
-      - name: Terraform Plan
-        working-directory: ${{ env.INFRASTRUCTURE_DIRECTORY }}
-        run: terraform plan
-
-      - name: Terraform Apply
-        working-directory: ${{ env.INFRASTRUCTURE_DIRECTORY }}
-        run: terraform apply -auto-approve
-

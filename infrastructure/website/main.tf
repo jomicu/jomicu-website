@@ -7,23 +7,19 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "AWS_TERRAFORM_BUCKET_PLACEHOLDER"
-    key    = "SERVICE_PLACEHOLDER/ENVIRONMENT_PLACEHOLDER/terraform.tfstate"
-    region = "AWS_REGION_PLACEHOLDER"
+    bucket = "__TERRAFORM_BUCKET_NAME_PLACEHOLDER__"
+    key    = "__SERVICE_PLACEHOLDER__/__ENVIRONMENT_PLACEHOLDER__/__TERRAFORM_BUCKET_NAME_PLACEHOLDER__"
+    region = "__AWS_REGION_PLACEHOLDER__"
     acl    = "bucket-owner-full-control"
   }
 }
 
-provider "aws" {
-  region = "AWS_REGION_PLACEHOLDER"
-}
-
 module "configuration" {
-  source           = "MODULE_SOURCE_PLACEHOLDER"
-  aws_region       = "AWS_REGION_PLACEHOLDER"
-  deployed_service = "SERVICE_PLACEHOLDER"
-  environment      = "ENVIRONMENT_PLACEHOLDER"
-  domain           = "DOMAIN_PLACEHOLDER"
-  subdomain        = "SUBDOMAIN_PLACEHOLDER"
-  cache_ttl        = "CACHE_TTL_PLACEHOLDER"
+  source           = "__MODULE_SOURCE_PLACEHOLDER__"
+  aws_region       = "__AWS_REGION_PLACEHOLDER__"
+  deployed_service = "__SERVICE_PLACEHOLDER__"
+  environment      = "__ENVIRONMENT_PLACEHOLDER__"
+  domain           = "__DOMAIN_PLACEHOLDER__"
+  subdomain        = "__SUBDOMAIN_PLACEHOLDER__"
+  cache_ttl        = "__CACHE_TTL_PLACEHOLDER__"
 }
