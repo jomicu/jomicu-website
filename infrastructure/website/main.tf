@@ -9,7 +9,6 @@ terraform {
 
 module "configuration" {
   source           = "__MODULE_SOURCE_PLACEHOLDER__"
-  aws_region       = "__AWS_REGION_PLACEHOLDER__"
   deployed_service = "__SERVICE_PLACEHOLDER__"
   environment      = "__ENVIRONMENT_PLACEHOLDER__"
   domain           = "__DOMAIN_PLACEHOLDER__"
