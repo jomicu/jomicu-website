@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "__TERRAFORM_BUCKET_NAME_PLACEHOLDER__"
-    key    = "__SERVICE_PLACEHOLDER__/__ENVIRONMENT_PLACEHOLDER__/__TERRAFORM_BUCKET_NAME_PLACEHOLDER__"
+    key    = "__SERVICE_PLACEHOLDER__/__ENVIRONMENT_PLACEHOLDER__/__TERRAFORM_STATE_FILE_NAME__"
     region = "__AWS_REGION_PLACEHOLDER__"
     acl    = "bucket-owner-full-control"
   }
