@@ -15,7 +15,7 @@ CACHE_TTL_PLACEHOLDER="__CACHE_TTL_PLACEHOLDER__"
 TERRAFORM_STATE_FILE_NAME="terraform.tfstate"
 TERRAFORM_BUCKET_NAME="jomicu-terraform-state"
 SERVICE="jomicu-website"
-MODULE_SOURCE="git@github.com:AWS-Infrastructure-Modules/terraform-static-website.git//module"
+MODULE_SOURCE="git@github.com:AWS-Infrastructure-Modules/terraform-static-website.git//module?ref=development"
 
 # Website domain
 DOMAIN="jomicu.com"
