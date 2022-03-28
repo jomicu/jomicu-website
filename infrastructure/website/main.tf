@@ -1,11 +1,4 @@
 terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = ">= 4.5"
-    }
-  }
-
   backend "s3" {
     bucket = "__TERRAFORM_BUCKET_NAME_PLACEHOLDER__"
     key    = "__SERVICE_PLACEHOLDER__/__ENVIRONMENT_PLACEHOLDER__/__TERRAFORM_BUCKET_NAME_PLACEHOLDER__"
